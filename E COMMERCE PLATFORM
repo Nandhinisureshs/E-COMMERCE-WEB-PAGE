@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #e100ff;
+            color: rgb(255, 255, 255);
+            padding: 20px;
+            font-size: 24px;
+            position: relative;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 20px;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            color: black;
+            min-width: 120px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .dropdown-content div {
+            padding: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .dropdown-content div:hover {
+            background-color: #ddd;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        #products, #sub-products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .product, .sub-product {
+            background-color: rgb(255, 255, 255);
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .product img, .sub-product img {
+            width: 100px;
+            height: 100px;
+        }
+
+        button {
+            background-color: #4828a7;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #472188;
+        }
+
+        #sub-title {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div style="flex: 1; text-align: left;">E-Commerce Store</div>
+            <div style="flex: 2; display: flex; justify-content: center;">
+                <input type="text" id="search" placeholder="Search products..." onkeyup="searchProduct()" style="width: 80%; max-width: 600px; padding: 10px; border-radius: 8px;">
+            </div>
+            <div style="flex: 1; display: flex; justify-content: flex-end; position: relative;">
+                <div class="profile-dropdown">
+                    <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Profile" class="profile-icon" onclick="toggleDropdown()">
+                    <div class="dropdown-content" id="dropdownMenu">
+                        <div onclick="alert('My Account')">My Account</div>
+                        <div onclick="alert('Logout')">Logout</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="products">
+        <div class="product" data-name="Laptop" onclick="showSubProducts('Laptop')">
+            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8" alt="Laptop">
+            <h2>Laptop</h2>
+        </div>
+
+        <div class="product" data-name="Phone" onclick="showSubProducts('Phone')">
+            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9" alt="Phone">
+            <h2>Phone</h2>
+        </div>
+
+        <div class="product" data-name="TV" onclick="showSubProducts('TV')">
+            <img src="image/Tv.jpg" alt="TV">
+            <h2>TV</h2>
+        </div>
+
+        <div class="product" data-name="Electronics" onclick="showSubProducts('Electronics')">
+            <img src="image/Fan.jpg" alt="Electronics">
+            <h2>Electronics</h2>
+        </div>
+
+        <div class="product" data-name="Bags" onclick="showSubProducts('Bags')">
+            <img src="image/Bag.jpg" alt="Bags">
+            <h2>Bags</h2>
+        </div>
+    </section>
+
+    <h2 id="sub-title">Available Models</h2>
+    <section id="sub-products"></section>
+
+    <script>
+        const subProducts = {
+            "Laptop": [
+                { name: "Dell XPS 15", price: "₹80,000", image: "images/dell-xps15.png" },
+                { name: "MacBook Pro", price: "₹1,20,000", image: "images/MacBook Pro.png" },
+                { name: "HP Spectre x360", price: "₹90,000", image: "images/HP Spectre x360.png" },
+                { name: "HP 15s intel", price: "₹44,499", image: "images/HP 15s intel.png" },
+                { name: "samsung", price: "₹1,40,000", image: "images/samsung.png" },
+                { name: "lenovo", price: "₹49,000", image: "images/lenovo.png" },
+                { name: "CHUWI", price: "₹15,990", image: "images/CHUWI.png" },
+                { name: "SAMSUNG galaxy", price: "₹54,990", image: "images/SAMSUNG galaxy.png" },
+                { name: "ASUS", price: "₹42,990", image: "images/ASUS.png" }
+            ],
+            "Phone": [
+                { name: "iPhone 14", price: "₹80,000", image: "https://via.placeholder.com/100" },
+                { name: "Samsung Galaxy S23", price: "₹75,000", image: "https://via.placeholder.com/100" },
+                { name: "OnePlus 11", price: "₹60,000", image: "https://via.placeholder.com/100" },
+                { name: "Google Pixel 7", "price": "₹70,000", image : "https://via.placeholder.com/100" },
+                { name: "Xiaomi 13 Pro", "price": "₹65,000", image : "https://via.placeholder.com/100" },
+                { name: "Realme GT 3", "price": "₹50,000", image : "https://via.placeholder.com/100" },
+                { name: "Vivo X90 Pro", "price": "₹68,000",  image: "https://via.placeholder.com/100" },
+                { name: "Asus ROG Phone 7", "price": "₹85,000",  image: "https://via.placeholder.com/100" },
+                { name: "Motorola Edge 40", "price": "₹55,000", image : "https://via.placeholder.com/100" },
+                { name: "Nothing Phone 2", "price": "₹45,000",  image: "https://via.placeholder.com/100" }
+],
+            "TV": [
+                { name: "Samsung QLED 4K", price: "₹1,00,000", image: "https://via.placeholder.com/100" },
+                { name: "LG OLED 55", price: "₹90,000", image: "https://via.placeholder.com/100" },
+                { name: "Sony Bravia 4K", price: "₹1,10,000", image: "https://via.placeholder.com/100" },
+                { name: "Samsung QLED 4K", "price": "₹1,00,000",image : "https://via.placeholder.com/100" },
+                { name: "LG OLED 55", "price": "₹90,000", image: "https://via.placeholder.com/100" },
+                { name: "Sony Bravia 65", "price": "₹1,20,000",image : "https://via.placeholder.com/100" },
+                { name: "TCL Mini LED 8K", "price": "₹1,50,000", image: "https://via.placeholder.com/100" },
+                { name: "Hisense U8H QLED", "price": "₹75,000", image: "https://via.placeholder.com/100" },
+                { name: "Panasonic 4K HDR", "price": "₹85,000",image : "https://via.placeholder.com/100" },
+                { name: "Philips Ambilight 55", "price": "₹88,000",image : "https://via.placeholder.com/100" },
+                { name: "Vu 4K Ultra HD", "price": "₹70,000",image : "https://via.placeholder.com/100" },
+                { name: "OnePlus Q2 Pro", "price": "₹95,000",image : "https://via.placeholder.com/100" },
+                { name: "Mi QLED 75", "price": "₹1,10,000",image : "https://via.placeholder.com/100" }
+],
+            "Electronics": [
+                { name: "Bose Headphones", price: "₹25,000", image: "https://via.placeholder.com/100" },
+                { name: "Fitbit Smartwatch", price: "₹15,000", image: "https://via.placeholder.com/100" },
+                { name: "Canon DSLR Camera", price: "₹60,000", image: "https://via.placeholder.com/100" },
+    {  name: "Bose Headphones", "price": "₹25,000", image: "https://via.placeholder.com/100" },
+    {  name: "Fitbit Smartwatch", "price": "₹15,000",image : "https://via.placeholder.com/100" },
+    {  name: "Sony Bluetooth Speaker", "price": "₹12,000",image : "https://via.placeholder.com/100" },
+    {  name: "Apple AirPods Pro", "price": "₹20,000", image: "https://via.placeholder.com/100" },
+    {  name: "Samsung Galaxy Watch", "price": "₹18,000", image: "https://via.placeholder.com/100" },
+    {  name: "Logitech Gaming Mouse", "price": "₹8,000", image: "https://via.placeholder.com/100" },
+    {  name: "Corsair Mechanical Keyboard", "price": "₹10,000", image: "https://via.placeholder.com/100" },
+    {  name: "JBL Party Box", "price": "₹35,000",image : "https://via.placeholder.com/100" },
+    {  name: "Kindle Paperwhite", "price": "₹14,000", image: "https://via.placeholder.com/100" },
+    {  name: "GoPro Hero 11", "price": "₹45,000",image : "https://via.placeholder.com/100" },
+    {  name: "Anker Power Bank", "price": "₹5,000", image: "https://via.placeholder.com/100" },
+    {  name: "Sony Home Theater", "price": "₹50,000",image : "https://via.placeholder.com/100" }
+],
+            "Bags": [
+                { name: "Nike Backpack", price: "₹5,000", image: "https://via.placeholder.com/100" },
+                { name: "American Tourister Luggage", price: "₹10,000", image: "https://via.placeholder.com/100" },
+                { name: "Wildcraft Hiking Bag", price: "₹8,000", image: "https://via.placeholder.com/100" },
+    { name: "Nike Backpack", "price": "₹5,000", image: "https://via.placeholder.com/100" },
+    { name: "American Tourister Luggage", "price": "₹10,000", image: "https://via.placeholder.com/100" },
+    { name: "Samsonite Travel Bag", "price": "₹12,000", image: "https://via.placeholder.com/100" },
+    { name: "Wildcraft Hiking Backpack", "price": "₹6,500", image: "https://via.placeholder.com/100" },
+    {name : "Skybags Laptop Bag", "price": "₹4,500",image : "https://via.placeholder.com/100" },
+    { name: "Fastrack Messenger Bag", "price": "₹3,500", image: "https://via.placeholder.com/100" },
+    { name: "Puma Sports Duffel", "price": "₹7,000",image : "https://via.placeholder.com/100" },
+    { name: "VIP Trolley Bag", "price": "₹15,000", image: "https://via.placeholder.com/100" },
+    { name: "Tommy Hilfiger Handbag", "price": "₹9,000",image : "https://via.placeholder.com/100" },
+    { name: "Hidesign Leather Satchel", "price": "₹14,000", image: "https://via.placeholder.com/100" },
+    { name: "Lavie Tote Bag", "price": "₹6,000",image : "https://via.placeholder.com/100" },
+    { name: "Aristocrat Rolling Suitcase", "price": "₹11,000", image: "https://via.placeholder.com/100" },
+    { name: "Swiss Gear Travel Backpack", "price": "₹8,000",image : "https://via.placeholder.com/100" },
+    { name: "American Tourister School Bag", "price": "₹3,000", image: "https://via.placeholder.com/100" }
+
+
+            ]
+        };
+
+        function searchProduct() {
+            let input = document.getElementById('search').value.toLowerCase();
+            let products = document.getElementsByClassName('product');
+
+            for (let i = 0; i < products.length; i++) {
+                let name = products[i].getAttribute('data-name').toLowerCase();
+                products[i].style.display = name.includes(input) ? "block" : "none";
+            }
+        }
+
+        function showSubProducts(productName) {
+            let subProductSection = document.getElementById('sub-products');
+            let subTitle = document.getElementById('sub-title');
+
+            subProductSection.innerHTML = "";
+            subTitle.style.display = "block";
+
+            subProducts[productName].forEach(item => {
+                let div = document.createElement('div');
+                div.classList.add('sub-product');
+                div.innerHTML = `
+    <img src="${item.image}" alt="${item.name}">
+    <h2>${item.name}</h2>
+    <p>Price: ${item.price}</p>
+    <button onclick="addToCart('${item.name}', '${item.price}', '${item.image}')">Add to Cart</button>
+`;
+
+                subProductSection.appendChild(div);
+            });
+        }
+
+        /*function addToCart(productName) {
+            alert(productName + " added to cart!");
+        }*/
+
+        function addToCart(name, price, image) {
+        let url = cart.html?name=${encodeURIComponent(name)}&price=${encodeURIComponent(price)}&image=${encodeURIComponent(image)};
+        window.location.href = url;
+    }
+
+    function toggleDropdown() {
+            let dropdown = document.getElementById('dropdownMenu');
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.profile-icon')) {
+                let dropdown = document.getElementById('dropdownMenu');
+                if (dropdown && dropdown.style.display === "block") {
+                    dropdown.style.display = "none";
+                }
+            }
+        }
+
+    </script>
+
+</body>
+</html>
